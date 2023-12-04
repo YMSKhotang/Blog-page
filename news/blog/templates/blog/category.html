@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- blog/templates/blog/category.html -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% extends "blog/index.html" %}
 
-<body>
-    {% extends "blog/index.html" %}
-
-    {% block page_title %}
-    <h2>{{ category }}</h2>
-    {% endblock page_title %}
-</body>
-
-</html>
+{% block page_title %}
+<h2>{{ category }}</h2>
+{% endblock page_title %}

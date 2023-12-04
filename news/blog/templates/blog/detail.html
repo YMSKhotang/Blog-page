@@ -1,28 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--  blog/templates/blog/detail.html -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% extends 'blog/base.html'  %}
 
-<body>
-   
+{% block page_title %}
     <h2>{{ post.title }}</h2>
+{% endblock page_title %}
 
-
- 
+{% block page_content %}
     <small>
         {{ post.created_on.date }} | Categories:
         {% for category in post.categories.all %}
-        <a href="{% url 'blog_category' category.name %}">
-            {{ category.name }}
-        </a>
+            <a href="{% url 'blog_category' category.name %}">
+                {{ category.name }}
+            </a>
         {% endfor %}
     </small>
     <p>{{ post.body | linebreaks }}</p>
 
-</body>
+    <h3>Leave a comment:</h3>
+    <form method="post">
+        {% csrf_token %}
+        <!-- csrf_token provides security and renders the body and author fields of 
+            the form, followed by a submit button.
+        -->
+        <div>
+            {{ form.author }}
+        </div>
+        <div>
+            {{ form.body }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
-</html>
+    <h3>Comments:</h3>
+    {% for comment in comments %}
+        <p>
+            On {{ comment.created_on.date }} <b>{{ comment.author }}</b> wrote:
+        </p>
+        <p>
+            {{ comment.body | linebreaks }}
+        </p>
+    {% endfor %}  
+{% endblock page_content %}
