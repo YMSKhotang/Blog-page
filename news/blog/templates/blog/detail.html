@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+   
+    <h2>{{ post.title }}</h2>
+
+
+ 
+    <small>
+        {{ post.created_on.date }} | Categories:
+        {% for category in post.categories.all %}
+        <a href="{% url 'blog_category' category.name %}">
+            {{ category.name }}
+        </a>
+        {% endfor %}
+    </small>
+    <p>{{ post.body | linebreaks }}</p>
+
+</body>
+
+</html>
