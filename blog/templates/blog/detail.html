@@ -1,0 +1,60 @@
+<!--  blog/templates/blog/detail.html -->
+
+{% extends 'blog/base.html' %}
+
+{% block page_title %}
+<div class="container">
+<nav 
+    style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+    aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'blog_index' %}">news</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+    </ol>
+</nav>
+</div>
+{% endblock page_title %}
+
+{% block page_content %}
+<div class="container">
+    <small>
+        {{ post.created_on.date }} | Categories:
+        {% for category in post.categories.all %}
+        <a href="{% url 'blog_category' category.name %}">
+            {{ category.name }}
+        </a>
+        {% endfor %}
+    </small>
+    <br>
+    <img src="/media/{{post.image}}" class="img-fluid" alt="...">
+    <p>{{ post.body | linebreaks }}</p>
+
+    <h3>Leave a comment:</h3>
+    <form method="post" class="form col-sm-12 col-lg-5 mb-4">
+        {% csrf_token %}
+        <!-- csrf_token provides security and renders the body and author fields of 
+                the form, followed by a submit button.
+            -->
+        <div class="mb-4">
+            {{ form.author }}
+        
+        </div>
+        
+        <div class="mb-4">
+            {{ form.body }}
+        </div>
+        <button type="submit" class="btn btn-outline-primary  w-25 mx"> send </button>
+    </form>
+
+    <h3>Comments:</h3>
+
+    {% for comment in comments %}
+    <div class="card text-bg-light mb-3" style="max-width: 18rem;">
+        <div class="card-header"> On {{ comment.created_on.date }} <b>{{ comment.author }}</b> wrote:
+            <p class="card-text">{{ comment.body | linebreaks }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock page_content %}
