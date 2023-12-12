@@ -7,6 +7,10 @@ from blog.models import Post, Comment
 from django.http import HttpResponseRedirect
 from blog.forms import CommentForm
 
+def blog_home(request):
+
+    return render (request, "blog/homepage.html")
+
 
 def blog_index(request):
     posts = Post.objects.all().order_by("-created_on")

@@ -10,6 +10,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
 
 class Post(models.Model):
     title = models.CharField(max_length=250)
@@ -17,6 +18,7 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add= True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField("Category", related_name="posts")
+    image= models.ImageField(upload_to="post/")
 
     def __str__(self):
         return self.title
